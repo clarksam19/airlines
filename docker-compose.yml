@@ -9,8 +9,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./client:/usr/src/app/local
-      - node_modules_client:/usr/src/app/local/node_modules
+      - ./client/src:/usr/src/app/src
+      - node_modules_client:/usr/src/app/node_modules
     container_name: airlines-dev
     environment:
       - PORT=3000
