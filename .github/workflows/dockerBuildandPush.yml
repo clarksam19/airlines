@@ -21,9 +21,11 @@ jobs:
         with:
           push: true
           tags: clarksam19/airlines:dev
+          dockerfile: Dockerfile.dev
 
       - name: Build and Push Prod Image
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: clarksam19/airlines:prod
+          dockerfile: Dockerfile.prod
