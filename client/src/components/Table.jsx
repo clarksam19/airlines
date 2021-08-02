@@ -1,33 +1,34 @@
 import React from "react";
 
-const Route = ({ route, getAirlineById, getAirportByCode }) => {
-  return (
-    <tr>
-      <td>{getAirlineById(route.airline)}</td>
-      <td>{getAirportByCode(route.src)}</td>
-      <td>{getAirportByCode(route.dest)}</td>
-    </tr>
-  );
+const Route = ({ route, column, format }) => {
+  return <td>{format(column.property, route[column.property])}</td>;
 };
 
-const Table = ({ rows, routeData }) => {
-  const { routes, getAirlineById, getAirportByCode } = routeData;
+const Table = ({ columns, rows, format }) => {
   return (
-    <table rows={rows}>
-      <tbody>
+    <table>
+      <thead>
         <tr>
-          <td>Airline</td>
-          <td>Source Airport</td>
-          <td>Destination Airport</td>
+          {columns.map((column) => {
+            return <th key={column.name}>{column.name}</th>;
+          })}
         </tr>
-        {routes.map((route, idx) => {
+      </thead>
+      <tbody>
+        {rows.map((route) => {
           return (
-            <Route
-              key={idx}
-              route={route}
-              getAirlineById={getAirlineById}
-              getAirportByCode={getAirportByCode}
-            />
+            <tr key={Object.values(route).join(":")}>
+              {columns.map((column) => {
+                return (
+                  <Route
+                    key={column.property + route[column.property]}
+                    route={route}
+                    column={column}
+                    format={format}
+                  />
+                );
+              })}
+            </tr>
           );
         })}
       </tbody>
