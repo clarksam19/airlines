@@ -35,7 +35,7 @@ const Pagination = ({
       <div>{childrenWithProps()}</div>
       <div className={className}>
         <p>
-          Showing {start + 1}-{start + perPage} of {total} routes.
+          Showing {start + 1}-{start + currentPage.length} of {total} routes.
         </p>
         <p>
           <button key="previous" disabled={page === 0} onClick={previousPage}>

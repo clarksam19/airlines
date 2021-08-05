@@ -103,11 +103,10 @@ const App = () => {
         <Pagination
           className="pagination"
           perPage={25}
-          total={routes.length}
-          routes={routes}
+          total={filteredRoutes.length}
+          routes={filteredRoutes}
         >
           <Table
-            key="display-main"
             className="routes-table"
             columns={columns}
             rows={filteredRoutes}
