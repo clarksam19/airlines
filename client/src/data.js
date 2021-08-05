@@ -3875,12 +3875,12 @@ const airports = [
 ];
 
 const getAirlineById = (id) => {
-  return airlines.find((airline) => airline.id === id).name;
+  return airlines.find((airline) => airline.id === id);
 };
 
 const getAirportByCode = (code) => {
-  return airports.find((airport) => airport.code === code).name;
+  return airports.find((airport) => airport.code === code);
 };
 
-const data = { routes, getAirlineById, getAirportByCode };
+const data = { routes, airlines, airports, getAirlineById, getAirportByCode };
 export default data;
