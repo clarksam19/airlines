@@ -1,5 +1,5 @@
 import axios from "axios";
-const path = "/api/temp";
+const path = "http://localhost:3001/api/routes";
 
 let token = null;
 

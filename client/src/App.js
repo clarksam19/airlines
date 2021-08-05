@@ -4,6 +4,7 @@ import "./App.css";
 import Layout from "./components/Layout";
 import Home from "./routes/Home";
 import UserAdmin from "./routes/UserAdmin";
+import MyRoutes from "./routes/MyRoutes";
 import routeData from "./data";
 
 const App = () => {
@@ -13,6 +14,11 @@ const App = () => {
         <Route path="/userAdmin">
           <Layout>
             <UserAdmin />
+          </Layout>
+        </Route>
+        <Route path="/myRoutes">
+          <Layout>
+            <MyRoutes />
           </Layout>
         </Route>
         <Route path="/">

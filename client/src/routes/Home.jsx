@@ -102,7 +102,6 @@ const Home = ({ routeData }) => {
         <Table
           className="routes-table"
           columns={columns}
-          rows={filteredRoutes}
           format={formatValue}
         />
       </Pagination>

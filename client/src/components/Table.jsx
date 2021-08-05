@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import routeService from "../services/routeService";
 
 const Row = ({ route, column, format }) => {
   return <td>{format(column.property, route[column.property])}</td>;
@@ -22,9 +23,27 @@ const Table = ({
   className = "table",
   currentPage = [],
 }) => {
+  // const [savedRoutes, setSavedRoutes] = useState([]);
+
+  const addRoute = ({ target }) => {
+    const cells = target.parentElement.children;
+    const params = [...cells].map((cell) => cell.textContent);
+    const route = {
+      airline: params[0],
+      src: params[1],
+      dest: params[2],
+    };
+
+    if (window.confirm(`Add ${Object.values(route).join("-")} to My Routes?`)) {
+      routeService.create(route);
+      // setSavedRoutes(savedRoutes.concat(route));
+    } else {
+      return;
+    }
+  };
   const tableBody = currentPage.map((route) => {
     return (
-      <tr key={Object.values(route).join(":")}>
+      <tr key={Object.values(route).join(":")} onClick={addRoute}>
         {columns.map((column) => {
           return (
             <Row

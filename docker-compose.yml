@@ -3,9 +3,7 @@ version: "3"
 services:
   client-dev:
     image: clarksam19/airlines-client:dev
-    build:
-      context: ./
-      dockerfile: Dockerfile.dev
+    build: ./client
     ports:
       - 3000:3000
     volumes:
@@ -17,8 +15,7 @@ services:
       - NODE_ENV=development
   server-dev:
     image: clarksam19/airlines-server:dev
-    build:
-      context: ./server
+    build: ./server
     ports:
       - 3001:3001
     volumes:

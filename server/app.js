@@ -6,7 +6,7 @@ require("express-async-errors");
 const cors = require("cors");
 // const path = require("path");
 const middleware = require("./utils/middleware");
-const tempRouter = require("./controllers/temps");
+const routesRouter = require("./controllers/routes");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const { logInfo, logError } = require("./utils/logger");
@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-app.use("/api/temp", tempRouter);
+app.use("/api/routes", routesRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 

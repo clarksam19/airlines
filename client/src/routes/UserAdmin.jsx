@@ -3,7 +3,7 @@ import LoginForm from "../components/LoginForm";
 import SignupForm from "../components/SignupForm";
 import Notification from "../components/Notification";
 import userAdminService from "../services/userAdminService";
-import tempService from "../services/tempService";
+import routeService from "../services/routeService";
 import notify from "../utils/notify";
 
 const UserAdmin = () => {
@@ -20,7 +20,7 @@ const UserAdmin = () => {
     if (loggedInUser) {
       const user = JSON.parse(loggedInUser);
       setUser(user);
-      tempService.setToken(user.token);
+      routeService.setToken(user.token);
     }
   }, []);
   const resetNotification = () => {
@@ -37,7 +37,7 @@ const UserAdmin = () => {
         password,
       });
       window.localStorage.setItem("loggedInUser", JSON.stringify(user));
-      tempService.setToken(user.token);
+      routeService.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");

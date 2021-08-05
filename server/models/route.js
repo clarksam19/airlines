@@ -1,7 +1,15 @@
 const mongoose = require("mongoose");
 
-const tempSchema = new mongoose.Schema({
-  content: {
+const routeSchema = new mongoose.Schema({
+  airline: {
+    type: String,
+    required: true,
+  },
+  src: {
+    type: String,
+    required: true,
+  },
+  dest: {
     type: String,
     required: true,
   },
@@ -11,7 +19,7 @@ const tempSchema = new mongoose.Schema({
   },
 });
 
-tempSchema.set("toJSON", {
+routeSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -19,4 +27,4 @@ tempSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Temp", tempSchema);
+module.exports = mongoose.model("Route", routeSchema);

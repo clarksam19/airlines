@@ -14,6 +14,9 @@ const Header = () => {
       <Link style={linkStyle} to={"/userAdmin"}>
         Login/Signup
       </Link>
+      <Link style={linkStyle} to={"/myRoutes"}>
+        My Routes
+      </Link>
     </header>
   );
 };
