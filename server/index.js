@@ -1,12 +1,10 @@
-const express = require("express");
-const path = require("path");
-const app = express();
-const PORT = process.env.PORT;
+const app = require("./app");
+const http = require("http");
+const config = require("./utils/config");
+const { logInfo } = require("./utils/logger");
 
-app.use(express.static(path.join(__dirname, "build")));
+const server = http.createServer(app);
 
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+server.listen(config.PORT, () => {
+  logInfo(`Server running on port ${config.PORT}`);
 });
-
-app.listen(PORT, () => `listening on port ${PORT}`);

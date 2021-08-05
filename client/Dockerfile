@@ -1,8 +1,8 @@
 FROM clarksam19/react-client:dev
 WORKDIR /usr/src/app
-COPY ./client/public ./public
+COPY ./public ./public
 WORKDIR /usr/src/app/src
-COPY ./client/src .
+COPY ./src .
 ENV PORT=3000
 EXPOSE 3000
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

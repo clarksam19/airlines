@@ -2,7 +2,7 @@ version: "3"
 
 services:
   client-dev:
-    image: clarksam19/airlines:dev
+    image: clarksam19/airlines-client:dev
     build:
       context: ./
       dockerfile: Dockerfile.dev
@@ -11,12 +11,28 @@ services:
     volumes:
       - ./client/src:/usr/src/app/src
       - node_modules_client:/usr/src/app/node_modules
-    container_name: airlines-dev
+    container_name: airlines-client-dev
     environment:
       - PORT=3000
       - NODE_ENV=development
+  server-dev:
+    image: clarksam19/airlines-server:dev
+    build:
+      context: ./server
+    ports:
+      - 3001:3001
+    volumes:
+      - ./server:/usr/src/app/local
+      - node_modules_server:/usr/src/app/node_modules
+    container_name: airlines-server-dev
+    environment:
+      - PORT=3001
+      - NODE_ENV=development
+    env_file:
+      - ./.env
 volumes:
   node_modules_client:
+  node_modules_server:
 
 networks:
   default:
