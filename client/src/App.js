@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Map from "./components/Map";
 import Select from "./components/Select";
+import Pagination from "./components/Pagination";
 import Table from "./components/Table";
 import routeData from "./data";
 
@@ -99,12 +100,20 @@ const App = () => {
         <button onClick={clearFilters} disabled={defaultsSelected}>
           Show All Routes
         </button>
-        <Table
-          className="routes-table"
-          columns={columns}
-          rows={filteredRoutes}
-          format={formatValue}
-        />
+        <Pagination
+          className="pagination"
+          perPage={25}
+          total={routes.length}
+          routes={routes}
+        >
+          <Table
+            key="display-main"
+            className="routes-table"
+            columns={columns}
+            rows={filteredRoutes}
+            format={formatValue}
+          />
+        </Pagination>
       </section>
     </div>
   );
