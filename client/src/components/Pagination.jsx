@@ -26,7 +26,7 @@ const Pagination = ({
     return [children].map((child, index) => {
       return React.cloneElement(
         child,
-        Object.assign({ currentPage, key: `display=${index}` }, child.props)
+        Object.assign({ currentPage, key: `display-${index}` }, child.props)
       );
     });
   };
