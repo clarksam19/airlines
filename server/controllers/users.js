@@ -19,9 +19,17 @@ usersRouter.post("/", async (req, res) => {
 });
 
 usersRouter.get("/", async (req, res) => {
-  const users = await User.find({}).populate("contents", { content: 1 });
+  const users = await User.find({}).populate("routes");
 
   res.json(users.map((user) => user.toJSON()));
+});
+
+usersRouter.get("/:username", async (req, res) => {
+  const user = await User.findOne({ username: req.params.username }).populate(
+    "routes",
+    { airline: 1, src: 1, dest: 1 }
+  );
+  res.json(user.toJSON());
 });
 
 module.exports = usersRouter;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import routeService from "../services/routeService";
 
 const Row = ({ route, column, format }) => {
@@ -25,8 +25,8 @@ const Table = ({
 }) => {
   // const [savedRoutes, setSavedRoutes] = useState([]);
 
-  const addRoute = ({ target }) => {
-    const cells = target.parentElement.children;
+  const addRoute = ({ currentTarget }) => {
+    const cells = currentTarget.children;
     const params = [...cells].map((cell) => cell.textContent);
     const route = {
       airline: params[0],
@@ -41,9 +41,40 @@ const Table = ({
       return;
     }
   };
+
+  const removeRoute = ({ currentTarget }) => {
+    const cells = currentTarget.children;
+    const params = [...cells].map((cell) => cell.textContent);
+    const route = {
+      airline: params[0],
+      src: params[1],
+      dest: params[2],
+    };
+
+    if (
+      window.confirm(`Remove ${Object.values(route).join("-")} to My Routes?`)
+    ) {
+      routeService.remove(currentTarget.id);
+      // setSavedRoutes(savedRoutes.concat(route));
+    } else {
+      return;
+    }
+  };
+
+  const handleRowClick = (event) => {
+    if (document.querySelector("h2").textContent === "My Routes") {
+      removeRoute(event);
+    } else {
+      addRoute(event);
+    }
+  };
   const tableBody = currentPage.map((route) => {
     return (
-      <tr key={Object.values(route).join(":")} onClick={addRoute}>
+      <tr
+        key={Object.values(route).join(":")}
+        onClick={handleRowClick}
+        id={route.id ? route.id : ""}
+      >
         {columns.map((column) => {
           return (
             <Row

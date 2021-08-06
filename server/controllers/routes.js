@@ -42,6 +42,7 @@ routeRouter.post("/", async (req, res) => {
     airline: body.airline,
     src: body.src,
     dest: body.dest,
+    user: user._id,
   });
 
   const savedRoute = await route.save();

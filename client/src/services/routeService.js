@@ -23,6 +23,10 @@ const services = {
     const res = await axios.post(path, newObject, config);
     return res.data;
   },
+  remove: async (id) => {
+    const res = await axios.delete(`${path}/${id}`);
+    return res.data;
+  },
   update: (id, newObject) => {
     const res = axios.put(`${path}/${id}`, newObject);
     return res.data;

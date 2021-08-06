@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import { ConnectedRouter as Router } from "connected-react-router";
 import "./App.css";
 import Layout from "./components/Layout";
 import Home from "./routes/Home";
@@ -7,9 +8,9 @@ import UserAdmin from "./routes/UserAdmin";
 import MyRoutes from "./routes/MyRoutes";
 import routeData from "./data";
 
-const App = () => {
+const App = ({ history, context }) => {
   return (
-    <Router>
+    <Router history={history} context={context}>
       <Switch>
         <Route path="/userAdmin">
           <Layout>

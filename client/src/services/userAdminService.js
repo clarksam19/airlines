@@ -11,6 +11,10 @@ const services = {
     const res = await axios.post(signupPath, credentials);
     return res.data;
   },
+  load: async (username) => {
+    const res = await axios.get(`${signupPath}/${username}`);
+    return res.data;
+  },
 };
 
 export default services;
