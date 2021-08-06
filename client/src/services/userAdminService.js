@@ -7,6 +7,9 @@ const services = {
     const res = await axios.post(loginPath, credentials);
     return res.data;
   },
+  logout: () => {
+    return window.localStorage.removeItem("loggedInUser");
+  },
   signup: async (credentials) => {
     const res = await axios.post(signupPath, credentials);
     return res.data;

@@ -1,7 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../reducers/rootReducer";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    window.localStorage.removeItem("loggedInUser");
+  };
   const linkStyle = {
     padding: "5px",
   };
@@ -17,6 +25,7 @@ const Header = () => {
       <Link style={linkStyle} to={"/myRoutes"}>
         My Routes
       </Link>
+      <button onClick={handleLogout}>Logout</button>
     </header>
   );
 };

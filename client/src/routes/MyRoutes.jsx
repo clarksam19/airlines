@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../reducers/rootReducer";
 import Pagination from "../components/Pagination";
 import Table from "../components/Table";
 import userAdminService from "../services/userAdminService";
 
 const MyRoutes = () => {
-  const [user, setUser] = useState({ routes: [] });
+  const reduxUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUser = async () => {
       const user = JSON.parse(window.localStorage.getItem("loggedInUser"));
-      const res = await userAdminService.load(user.username);
-      setUser(res);
+      if (user) {
+        const res = await userAdminService.load(user.username);
+        dispatch(setUser(res));
+      } else {
+        return;
+      }
     };
 
     fetchUser();
-  }, []);
+  }, [dispatch]);
 
   const columns = [
     { name: "Airline", property: "airline" },
@@ -28,10 +35,15 @@ const MyRoutes = () => {
       <Pagination
         className="pagination"
         perPage={25}
-        total={user.routes.length}
-        routes={user.routes}
+        total={(reduxUser.routes || []).length}
+        routes={reduxUser.routes || []}
       >
-        <Table className="routes-table" columns={columns} />
+        <Table
+          className="routes-table"
+          columns={columns}
+          dispatch={dispatch}
+          user={reduxUser}
+        />
       </Pagination>
     </div>
   );

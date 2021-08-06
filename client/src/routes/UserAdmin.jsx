@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { login } from "../reducers/rootReducer";
+import { useDispatch } from "react-redux";
 import LoginForm from "../components/LoginForm";
 import SignupForm from "../components/SignupForm";
 import Notification from "../components/Notification";
@@ -7,38 +9,28 @@ import routeService from "../services/routeService";
 import notify from "../utils/notify";
 
 const UserAdmin = () => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [, setUser] = useState(null);
-  const [, setNewUser] = useState(null);
   const [loginVisible, setLoginVisible] = useState(false);
   const [signupVisible, setSignupVisible] = useState(false);
   const [notification, setNotification] = useState(notify().reset);
 
-  useEffect(() => {
-    const loggedInUser = window.localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser);
-      setUser(user);
-      routeService.setToken(user.token);
-    }
-  }, []);
   const resetNotification = () => {
     setTimeout(() => {
       setNotification(notify().reset);
     }, 5000);
   };
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
-      const user = await userAdminService.login({
-        username,
-        password,
-      });
+      const credentials = { username, password };
+      const user = await userAdminService.login(credentials);
       window.localStorage.setItem("loggedInUser", JSON.stringify(user));
       routeService.setToken(user.token);
-      setUser(user);
+      dispatch(login(credentials));
       setUsername("");
       setPassword("");
       setNotification(notify(user.username).success.login);
@@ -53,11 +45,11 @@ const UserAdmin = () => {
     event.preventDefault();
 
     try {
-      const newUser = await userAdminService.signup({
+      await userAdminService.signup({
         username,
         password,
       });
-      setNewUser(newUser);
+
       setUsername("");
       setPassword("");
       setNotification(notify().success.signup);

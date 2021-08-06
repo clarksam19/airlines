@@ -30,13 +30,16 @@ const Pagination = ({
       );
     });
   };
+
+  const message = currentPage.length
+    ? `Showing ${start + 1}-${start + currentPage.length} of ${total} routes.`
+    : "You have no saved routes";
+
   return (
     <div>
       <div>{childrenWithProps()}</div>
       <div className={className}>
-        <p>
-          Showing {start + 1}-{start + currentPage.length} of {total} routes.
-        </p>
+        <p>{message}</p>
         <p>
           <button key="previous" disabled={page === 0} onClick={previousPage}>
             Previous Page

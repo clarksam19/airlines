@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Map from "../components/Map";
 import Select from "../components/Select";
 import Pagination from "../components/Pagination";
 import Table from "../components/Table";
 
 const Home = ({ routeData }) => {
+  const dispatch = useDispatch();
   const { routes, airlines, airports, getAirlineById, getAirportByCode } =
     routeData;
   const [airline, setAirline] = useState("all");
@@ -103,6 +105,7 @@ const Home = ({ routeData }) => {
           className="routes-table"
           columns={columns}
           format={formatValue}
+          dispatch={dispatch}
         />
       </Pagination>
     </section>

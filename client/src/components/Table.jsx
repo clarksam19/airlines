@@ -1,5 +1,6 @@
 import React from "react";
-import routeService from "../services/routeService";
+import { removeRoute, addRoute } from "../reducers/rootReducer";
+// import routeService from "../services/routeService";
 
 const Row = ({ route, column, format }) => {
   return <td>{format(column.property, route[column.property])}</td>;
@@ -22,10 +23,9 @@ const Table = ({
   format = (_, value) => value,
   className = "table",
   currentPage = [],
+  dispatch,
 }) => {
-  // const [savedRoutes, setSavedRoutes] = useState([]);
-
-  const addRoute = ({ currentTarget }) => {
+  const addSelectedRoute = async ({ currentTarget }) => {
     const cells = currentTarget.children;
     const params = [...cells].map((cell) => cell.textContent);
     const route = {
@@ -35,14 +35,13 @@ const Table = ({
     };
 
     if (window.confirm(`Add ${Object.values(route).join("-")} to My Routes?`)) {
-      routeService.create(route);
-      // setSavedRoutes(savedRoutes.concat(route));
+      await dispatch(addRoute(route));
     } else {
       return;
     }
   };
 
-  const removeRoute = ({ currentTarget }) => {
+  const removeSelectedRoute = async ({ currentTarget }) => {
     const cells = currentTarget.children;
     const params = [...cells].map((cell) => cell.textContent);
     const route = {
@@ -54,18 +53,17 @@ const Table = ({
     if (
       window.confirm(`Remove ${Object.values(route).join("-")} to My Routes?`)
     ) {
-      routeService.remove(currentTarget.id);
-      // setSavedRoutes(savedRoutes.concat(route));
+      await dispatch(removeRoute(currentTarget.id));
     } else {
       return;
     }
   };
 
   const handleRowClick = (event) => {
-    if (document.querySelector("h2").textContent === "My Routes") {
-      removeRoute(event);
+    if (document.querySelector("h2")) {
+      removeSelectedRoute(event);
     } else {
-      addRoute(event);
+      addSelectedRoute(event);
     }
   };
   const tableBody = currentPage.map((route) => {
