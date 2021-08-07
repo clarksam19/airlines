@@ -3,12 +3,15 @@ import { connectRouter } from "connected-react-router";
 import routeService from "../services/routeService";
 import userAdminService from "../services/userAdminService";
 
-const userReducer = (state = [], action) => {
+const loggedInUser = window.localStorage.getItem("loggedInUser");
+const defaultState = loggedInUser ? JSON.parse(loggedInUser) : {};
+
+const userReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "LOGIN":
       return action.data;
     case "LOGOUT":
-      return [];
+      return {};
     case "SET_USER":
       return action.data;
     case "ADD_ROUTE":
@@ -36,6 +39,7 @@ export const login = (credentials) => {
   return async (dispatch) => {
     const user = await userAdminService.login(credentials);
     const userWithRoutes = await userAdminService.load(user.username);
+    window.localStorage.setItem("loggedInUser", JSON.stringify(userWithRoutes));
     dispatch({
       type: "LOGIN",
       data: userWithRoutes,
@@ -44,6 +48,7 @@ export const login = (credentials) => {
 };
 
 export const logout = () => {
+  userAdminService.logout();
   return (dispatch) => {
     dispatch({
       type: "LOGOUT",

@@ -20,11 +20,10 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "docker-compose -f docker-compose-prod.yml up -d --build",
-    "start:in": "docker-compose -f docker-compose-prod.yml up -d && docker exec -it test-server-prod sh",
+    "start": "docker-compose -f docker-compose-prod.yml up -d",
+    "start:in": "docker-compose -f docker-compose-prod.yml up -d && docker exec -it airlines-prod sh",
     "stop": "docker-compose -f docker-compose-prod.yml down",
     "dev": "docker-compose up -d",
-    "dev:in": "docker-compose up -d && docker exec -it test-server bash",
     "stop:dev": "docker-compose down",
     "deploy": "git add . && git commit && git push"
   },

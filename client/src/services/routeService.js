@@ -1,12 +1,10 @@
 import axios from "axios";
 const path = "http://localhost:3001/api/routes";
 
-let token = null;
+const loggedInUser = window.localStorage.getItem("loggedInUser");
+const token = loggedInUser ? `bearer ${JSON.parse(loggedInUser).token}` : null;
 
 const services = {
-  setToken: (newToken) => {
-    token = `bearer ${newToken}`;
-  },
   getAll: async () => {
     const res = await axios.get(path);
     return res.data;

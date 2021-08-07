@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { removeRoute, addRoute } from "../reducers/rootReducer";
-// import routeService from "../services/routeService";
+import Notification from "../components/Notification";
+import notify from "../utils/notify";
 
 const Row = ({ route, column, format }) => {
   return <td>{format(column.property, route[column.property])}</td>;
@@ -25,6 +26,18 @@ const Table = ({
   currentPage = [],
   dispatch,
 }) => {
+  const [notification, setNotification] = useState(notify().reset);
+
+  const isLoggedIn = () => {
+    return !!window.localStorage.getItem("loggedInUser");
+  };
+
+  const resetNotification = () => {
+    setTimeout(() => {
+      setNotification(notify().reset);
+    }, 5000);
+  };
+
   const addSelectedRoute = async ({ currentTarget }) => {
     const cells = currentTarget.children;
     const params = [...cells].map((cell) => cell.textContent);
@@ -35,7 +48,14 @@ const Table = ({
     };
 
     if (window.confirm(`Add ${Object.values(route).join("-")} to My Routes?`)) {
-      await dispatch(addRoute(route));
+      try {
+        await dispatch(addRoute(route));
+        setNotification(notify().success.add);
+        resetNotification();
+      } catch (error) {
+        setNotification(notify().error.add);
+        resetNotification();
+      }
     } else {
       return;
     }
@@ -51,19 +71,32 @@ const Table = ({
     };
 
     if (
-      window.confirm(`Remove ${Object.values(route).join("-")} to My Routes?`)
+      window.confirm(`Remove ${Object.values(route).join("-")} from My Routes?`)
     ) {
-      await dispatch(removeRoute(currentTarget.id));
+      try {
+        await dispatch(removeRoute(currentTarget.id));
+        setNotification(notify().success.remove);
+        resetNotification();
+      } catch (error) {
+        setNotification(notify().error.remove);
+        resetNotification();
+      }
     } else {
       return;
     }
   };
 
   const handleRowClick = (event) => {
-    if (document.querySelector("h2")) {
-      removeSelectedRoute(event);
+    if (isLoggedIn()) {
+      if (document.querySelector("h2")) {
+        removeSelectedRoute(event);
+      } else {
+        addSelectedRoute(event);
+      }
     } else {
-      addSelectedRoute(event);
+      setNotification(notify().deny.add);
+      resetNotification();
+      return;
     }
   };
   const tableBody = currentPage.map((route) => {
@@ -88,10 +121,13 @@ const Table = ({
   });
 
   return (
-    <table className={className}>
-      <Head columns={columns} />
-      <tbody>{tableBody}</tbody>
-    </table>
+    <>
+      <Notification notification={notification} />
+      <table className={className}>
+        <Head columns={columns} />
+        <tbody>{tableBody}</tbody>
+      </table>
+    </>
   );
 };
 

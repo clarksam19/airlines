@@ -5,7 +5,6 @@ import LoginForm from "../components/LoginForm";
 import SignupForm from "../components/SignupForm";
 import Notification from "../components/Notification";
 import userAdminService from "../services/userAdminService";
-import routeService from "../services/routeService";
 import notify from "../utils/notify";
 
 const UserAdmin = () => {
@@ -27,13 +26,10 @@ const UserAdmin = () => {
 
     try {
       const credentials = { username, password };
-      const user = await userAdminService.login(credentials);
-      window.localStorage.setItem("loggedInUser", JSON.stringify(user));
-      routeService.setToken(user.token);
       dispatch(login(credentials));
+      setNotification(notify(username).success.login);
       setUsername("");
       setPassword("");
-      setNotification(notify(user.username).success.login);
       resetNotification();
     } catch (err) {
       setNotification(notify().error.login);

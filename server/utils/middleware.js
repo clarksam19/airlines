@@ -1,4 +1,3 @@
-const { response } = require("../app");
 const { logInfo, logError } = require("./logger");
 
 const requestLogger = (req, res, next) => {

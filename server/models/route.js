@@ -27,4 +27,6 @@ routeSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Route", routeSchema);
+const Route = mongoose.model("Route", routeSchema);
+
+module.exports = Route;

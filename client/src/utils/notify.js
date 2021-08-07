@@ -7,15 +7,11 @@ const notify = (name) => {
     success: {
       add: {
         type: "success",
-        message: "content successfully added!",
-      },
-      update: {
-        type: "success",
-        message: "content successfully updated!",
+        message: "route successfully added!",
       },
       remove: {
         type: "success",
-        message: "content successfully removed!",
+        message: "route successfully removed!",
       },
       signup: {
         type: "success",
@@ -33,15 +29,13 @@ const notify = (name) => {
     error: {
       add: {
         type: "error",
-        message: "sorry, we were unable to add the content",
-      },
-      update: {
-        type: "error",
-        message: "sorry, we were unable to update the content",
+        message:
+          "sorry, an error occurred on our end in trying to add this route",
       },
       remove: {
         type: "error",
-        message: "sorry, we were unable to update the content",
+        message:
+          "sorry, an error occurred on our end in trying to remove this route",
       },
       signup: {
         type: "error",
@@ -51,6 +45,13 @@ const notify = (name) => {
       login: {
         type: "error",
         message: "invalid username and/or password",
+      },
+    },
+    deny: {
+      add: {
+        type: "error",
+        message:
+          "if you'd like to save this route, please login to your account",
       },
     },
   };
