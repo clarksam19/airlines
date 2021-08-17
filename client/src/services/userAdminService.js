@@ -1,6 +1,6 @@
 import axios from "axios";
-const loginPath = "http://localhost:3001/api/login";
-const signupPath = "http://localhost:3001/api/users";
+const loginPath = "/api/login";
+const signupPath = "/api/users";
 
 const services = {
   login: async (credentials) => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-const path = "http://localhost:3001/api/routes";
+const path = "/api/routes";
 
 const loggedInUser = window.localStorage.getItem("loggedInUser");
 const token = loggedInUser ? `bearer ${JSON.parse(loggedInUser).token}` : null;
